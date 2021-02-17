@@ -31,11 +31,15 @@ public class DebuggingDemos {
     @Test
     public void runtimeErrors() {
 
-//        Course course = courseRepository.findByDeptName("Sciences");
-//
-//        Course view = courseRepository.getCourseViewByName("English 101");
+        Course course = courseRepository.findByDepartmentName("Sciences");
 
+        //Various ways to leverage the Optional
+        CourseView view = courseRepository.getCourseViewByName("English 101").get();
+        view = courseRepository.getCourseViewByName("English 101").orElseThrow();
+        view = courseRepository.getCourseViewByName("English 100").orElse(
+                new CourseView("dummyCourse",
+                        "Bad Instructor",
+                        "No Department"));
     }
-
 
 }

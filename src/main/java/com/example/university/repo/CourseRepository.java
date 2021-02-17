@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface CourseRepository extends CrudRepository<Course,Integer>{
@@ -31,4 +32,9 @@ public interface CourseRepository extends CrudRepository<Course,Integer>{
 
     Page<Course> findByCredits(@Param("credits") int credits, Pageable pageable);
 
+    Course findByDepartmentName(String deptName);
+
+    @Query("Select new com.example.university.view.CourseView" +
+            "(c.name, c.instructor.member.lastName, c.department.name) from Course c where c.name=?1")
+    Optional<CourseView> getCourseViewByName(String name);
 }
